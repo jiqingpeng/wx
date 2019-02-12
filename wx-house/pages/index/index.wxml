@@ -1,0 +1,44 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+     <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">账号</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入账号" bindinput='admin'/>
+                </view>
+            </view>
+      </view>
+      <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">密码</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入密码"  bindinput='pwd' type='password'/>
+                </view>
+            </view>
+      </view>    
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">手机号</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入手机号" />
+                </view>
+                <view class="weui-cell__ft">
+                    <view class="weui-vcode-btn">获取验证码</view>
+                </view>
+      </view> 
+    <view class="page__hd" wx:if="{{showTopToast}}">
+        <view class="page__title">Toast</view>
+        <view class="page__desc">登陆成功</view>
+    </view>
+    <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="showTopTips">登陆</button>
+    </view>
+</view>
+ 
+</view>

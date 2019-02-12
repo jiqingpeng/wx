@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var isSameDay=exports.isSameDay=function(e,t){var a=new Date(e),r=new Date(t);return Object.is(a.getFullYear(),r.getFullYear())&&Object.is(a.getMonth(),r.getMonth())&&Object.is(a.getDate(),r.getDate())},isToday=exports.isToday=function(e){return isSameDay(new Date,e)};

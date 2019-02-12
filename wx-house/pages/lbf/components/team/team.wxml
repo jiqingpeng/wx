@@ -1,0 +1,79 @@
+<view class="pingpp-page" style="height: {{height}}px;">
+    <block wx:if="{{members_count > 0}}">
+
+        <!--团队汇总信息-->
+        <view style="width: 100%; padding: 0 40rpx;">
+            <view class="team-summary">
+                <!--团队总收益-->
+                <view class="summary-text" wx:if="{{members_total_amount > 0}}">团队总收益：{{members_total_amount}} 元</view>
+                <view class="summary-text" wx:else>暂无团队收益</view>
+
+                <!--团队总人数-->
+                <view class="summary-text">团队总人数：{{members_count}} 人</view>
+
+                <image src="../../assets/imgs/info.svg" data-show="true" class="info-icon" bindtap="updateTipStatus"></image>
+            </view>
+        </view>
+
+        <!--团队成员收益排行-->
+        <view style="width: 100%;">
+            <scroll-view scroll-y="true" lower-threshold="100" bindscrolltolower="loadMore" class="income-rank {{ showCrown ? 'highlight' : '' }}"
+                style="height: {{height - 71 - 20}}px;">
+                <view class="rank-title">
+                    <view>团队成员</view>
+                    <view>累计带来的收益金额</view>
+                </view>
+
+                <block wx:for="{{rank.data}}" wx:key="index">
+                    <view class='rank-item'>
+                        <view class='user-avatar' style="background-image: url({{item.avatar}})"></view>
+                        <view class='user-nickname'>{{item.nickname}}</view>
+
+                        <view class="item-amount">{{item.total_amount}} 元</view>
+                    </view>
+                </block>
+
+                <view class="loading {{rank.reload ? 'first' : ''}}" wx:if="{{rank.loading}}">
+                    <image src='../../assets/imgs/load-more.png' class='rotation'></image>
+                </view>
+
+                <view class='no-more' style="margin-bottom: {{isIPhoneX ? '68rpx' : '20rpx' }}" wx:if="{{ rank.data.length > 0 && !rank.loading && rank.noMore}}">
+                    <view class='no-more-line'></view>
+                    <view class='no-more-text'>没有更多了</view>
+                    <view class='no-more-line'></view>
+                </view>
+            </scroll-view>
+        </view>
+    </block>
+
+    <!--团队暂无人员-->
+    <block wx:else>
+        <view class="intro-item">
+            <image src="../../assets/imgs/team-member.png" class="intro-img" mode="widthFix"></image>
+            <view class="intro-title">暂无好友加入你的团队，快去分享吧！</view>
+            <view class="intro-content">你的好友通过你的分享进入小程序后便加入了你的团队</view>
+            <view class="intro-content" bindtap="triggerTab">去分享 ></view>
+        </view>
+        <view class="intro-item">
+            <image src="../../assets/imgs/team-amount.png" class="intro-img" mode="widthFix"></image>
+            <view class="intro-title">如何从团队中获得收益？</view>
+            <view class="intro-content">好友加入你的团队后，在小程序中每完成一次消费你都会获得一定金额的奖励金收益。</view>
+        </view>
+    </block>
+
+    <!--团队介绍说明-->
+    <view class="preview" style="opacity: {{ show_team_qa? 1 : 0}}; height: {{show_team_qa? '100%' : 0}}; padding: {{ show_team_qa ? '90rpx 40rpx' : 0}};">
+        <view class="list">
+            <view class="item">
+                <view class="title">好友如何加入你的团队？</view>
+                <view class="content">你的好友通过你的分享进入小程序后便加入了你的团队。</view>
+            </view>
+            <view class="item">
+                <view class="title">如何从团队中获得收益？</view>
+                <view class="content">好友加入你的团队后，在小程序中每完成一次消费你都会获得一定金额的奖励金收益。</view>
+            </view>
+        </view>
+
+        <button class="hide-btn" bindtap="updateTipStatus">收起</button>
+    </view>
+</view>

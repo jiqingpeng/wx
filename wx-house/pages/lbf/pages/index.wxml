@@ -1,0 +1,22 @@
+<view class="jump" wx:if="{{jump}}"></view>
+<view class="lbf-pane" wx:else>
+    <view class='lbf-container'>
+        <scroll-view scroll-x='true' class="ping-tabs {{navbarStatus ? 'hide' : ''}}">
+            <block wx:for="{{tabs}}" wx:key="index">
+                <view class="ping-tab" bindtap='changeTab' id="{{index}}" style="width:{{tabWidth}}rpx;">
+                    <text class="ping-tab-content {{ currentTab == index ? 'ping-active' : ''}}">{{item}}</text>
+                </view>
+            </block>
+
+            <view wx:if="{{offset!==0}}" class="tab-line {{ isInit ? 'init' : '' }}" style="width:{{tabWidth-6}}rpx;transform:translateX({{offset}}px);"></view>
+        </scroll-view>
+
+        <swiper current="{{currentTab}}" bindchange='swiperTab' style="height:{{swiperHeight == '' ? '100%' : swiperHeight + 'px'}};">
+            <swiper-item wx:for="{{tabs}}" wx:key="index">
+                <activity bindface="updateNavbarStatus" height="{{swiperHeight == '' ? '100%' : swiperHeight}}" wx:if="{{ index === 0 }}" class="lbf-container" id="share"></activity>
+                <income bindtab="updateTab" height="{{swiperHeight == '' ? '100%' : swiperHeight}}" id="income" wx:if="{{ index === 1 }}"></income>
+                <team bindtab="updateTab" height="{{swiperHeight == '' ? '100%' : swiperHeight}}" id="team" wx:if="{{ index === 2 }}"e></team>
+            </swiper-item>
+        </swiper>
+    </view>
+</view>

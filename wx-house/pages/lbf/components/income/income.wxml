@@ -1,0 +1,145 @@
+<view class='ping-page' style="height: {{height}}px;">
+    <view class='ping-history-income'>
+        <view class='income-title'>余额（元）</view>
+
+        <view class='income-amount-box'>
+            <view class='income-amount-text'>{{incomesets.bounty_balance}}</view>
+            <form bindsubmit="reportFormID" report-submit='true'>
+                <button class='ping-aureate-btn' data-action="4" form-type="submit" bindtap='checkVerify'>提现</button>
+            </form>
+        </view>
+    </view>
+
+    <!-- income -->
+    <view class='ping-income static-income' id='fix'>
+        <block wx:for="{{tabs}}" wx:key="index">
+            <view class="ping-income-box {{ currentTab === index ? 'ping-active' : ''}}" bindtap="changeTab" id="{{index}}">
+                <view class="income-title {{ currentTab === index ? 'active' : ''}}" catchtap="{{ currentTab === index ? 'updateTipStatus' : null}}"
+                    data-show="true">
+                    {{item.name}}
+                    <image wx:if="{{ currentTab === index }}" src="../../assets/imgs/info.svg" class="info-icon"></image>
+                </view>
+                <view class='income-amount'>{{incomesets[item.key]}}</view>
+            </view>
+        </block>
+    </view>
+
+    <!-- message list -->
+    <scroll-view scroll-y="true" lower-threshold="100" bindscrolltolower="loadMore" class='ping-message' style="height: 100%;">
+        <block wx:if="{{ !messageList[currentTab].reload && messageList[currentTab].data.length > 0}}">
+            <view class="flaunt-content" wx:if="{{canFlaunt && currentTab === 2}}">
+                <view class="flaunt-text">你已获得了奖励！快去炫耀一下吧</view>
+                <form bindsubmit="reportFormID" report-submit='true'>
+                    <button class="flaunt-btn btn" data-action="6" form-type="submit" bindtap="generatePoster">炫耀一下</button>
+                </form>
+            </view>
+            <block wx:for="{{messageList[currentTab].data}}" wx:key="index">
+                <view class='message-item'>
+                    <block wx:if="{{currentTab === 0}}">
+                        <!-- potential income -->
+                        <view class="item-container">
+                            <view class='item-avatar' style="background-image: url({{item.source_avatar}})"></view>
+                            <view class='item-text'>{{item.content}}</view>
+                        </view>
+
+                        <!-- other income -->
+                        <view class="remind-content" wx:if="{{canRemind && item.reminder}}">
+                            <view class="remind-text" wx:if="{{item.haveRemined}}">{{ item.reminder ? '今日已催过 TA' : ''}}</view>
+                            <form bindsubmit="reportFormID" report-submit='true' wx:else>
+                                <button class="remind-btn btn" form-type="submit" data-action="5" open-type="share" data-share-type="remind" data-msg="{{item}}"
+                                    id="{{index}}" capturetap="remind">
+                                    <image class="remind-icon" src="../../assets/imgs/remind.svg"></image>
+                                    催催 TA
+                                </button>
+                            </form>
+                        </view>
+
+                        <!--躺赚模式下不提示-->
+                        <view class="remind-content" wx:if="{{item.bounty_transaction && item.bounty_transaction.status === 1 && item.reminder === false && isLyingEarning === false }}">
+                            <view class="remind-text">优惠券已过期</view>
+                        </view>
+                    </block>
+
+                    <block wx:else>
+                        <view class='item-avatar' style="background-image: url({{item.source_avatar}})"></view>
+                        <view class='item-text'>{{item.content}}</view>
+                    </block>
+                </view>
+            </block>
+        </block>
+
+        <view class="no-data share" wx:else>
+            <block wx:if="{{messageList[currentTab].loading}}"></block>
+            <block wx:else>
+                <image class="coupon-img" src="{{emptyText[currentTab].src}}"></image>
+                <view class="tip">{{emptyText[currentTab].text}}</view>
+                <view class="share" bindtap="triggerTab" data-type="{{emptyText[currentTab].actionType}}">
+                    {{emptyText[currentTab].action}}
+                    <text class="share-icon">></text>
+                </view>
+            </block>
+        </view>
+
+        <view class="loading {{messageList[currentTab].reload ? 'first' : ''}}" wx:if="{{messageList[currentTab].loading}}">
+            <image src='../../assets/imgs/load-more.png' class='rotation'></image>
+        </view>
+
+        <view class='no-more' style="margin-bottom: {{isIPhoneX ? '68rpx' : '20rpx' }}" wx:if="{{ messageList[currentTab].data.length > 0 && !messageList[currentTab].loading && messageList[currentTab].noMore}}">
+            <view class='no-more-line'></view>
+            <view class='no-more-text'>没有更多了</view>
+            <view class='no-more-line'></view>
+        </view>
+    </scroll-view>
+
+    <!--实名认证 Form-->
+    <view class="verify-container" style="opacity: {{showVerify? 1 : 0}}; height: {{showVerify? '100%' : 0}};">
+        <view class="verify-title">为了保证资金安全 , 提现需进行实名认证</view>
+
+        <input type="text" placeholder="真实姓名" class="verify-input" data-type="userName" value="{{userName}}" bindinput="updateField"/>
+        <input type="idcard" placeholder="身份证号" maxlength="18" class="verify-input" data-type="idCard" value="{{idCard}}" bindinput="updateField"/>
+
+        <view class="verify-tip" wx:if="{{verifyMsg !== ''}}">{{verifyMsg}}</view>
+
+        <block wx:if="{{verifying}}">
+            <view class="verify-loading">
+                <image src='../../assets/imgs/load-more.png' class='rotation'></image>
+            </view>
+        </block>
+        <block wx:else>
+            <form bindsubmit="reportFormID" report-submit='true'>
+                <button class="verify-btn" style="margin-top: {{verifyMsg !== '' ? 0 : '70rpx'}};" catchtap="checkUserInfo" form-type="submit" data-action="7">确认无误并提交</button>
+            </form>
+            <view class="verify-cancel" bindtap="hideVerify">取消</view>
+        </block>
+    </view>
+
+    <!--收益说明-->
+    <view class="preview" style="opacity: {{ showTip? 1 : 0}}; height: {{showTip? '100%' : 0}}; padding: {{ showTip ? '90rpx 40rpx' : 0}};">
+        <view class="list">
+            <view class="item">
+                <view class="title">潜在收益</view>
+                <view class="content">若好友产生消费可能会给你带来的收益。</view>
+            </view>
+            <view class="item">
+                <view class="title">待收益</view>
+                <view class="content">好友消费成功但在结算周期内的收益。（消费的商品会有一定时间的结算周期，结算周期过后收益将自动转入余额并计入总收益）</view>
+            </view>
+            <view class="item">
+                <view class="title">总收益</view>
+                <view class="content">累计已获得的总收益（已提现的和未提现的收益总和）。</view>
+            </view>
+        </view>
+
+        <view class="list">
+            <view class="item">
+                <view class="title">余额</view>
+                <view class="content">未提现到微信零钱的收益，可随时提现。</view>
+            </view>
+        </view>
+
+        <button class="hide-btn" bindtap="updateTipStatus">收起</button>
+    </view>
+
+    <!--炫耀海报预览-->
+    <preview type="2" size="{{imageSize}}" id="preview"></preview>
+</view>

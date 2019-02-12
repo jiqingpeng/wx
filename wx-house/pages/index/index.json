@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "lbf": "/pages/lbf/lbf",
+    "father": "../../component/father/father",
+    "child": "../../component/child/child"
+  }
+}

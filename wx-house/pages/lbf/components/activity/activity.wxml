@@ -1,0 +1,43 @@
+<view class="share-container">
+    <scroll-view class="intro-container" scroll-y="true" style="padding-bottom: {{isIPhoneX ? '184rpx' : '150rpx' }}">
+        <view class="loading" wx:if="{{activityImg.loading}}">
+            <image src='../../assets/imgs/load-more.png' class='rotation'></image>
+        </view>
+
+        <!-- <image src="{{activityImg.preview}}" data-type="0" bindload="imgLoad" binderror="imgError" style="width:0;height:0;opacity:0"></image> -->
+        <image src="{{activityImg.preview}}" mode="widthFix" data-type="0" bindload="imgLoad" binderror="imgError" class="{{ activityImg.url ==='' ? 'default' : ''}}"></image>
+    </scroll-view>
+
+    <form bindsubmit="reportFormID" report-submit='true'>
+        <view class="btn-container" style="bottom: {{isIPhoneX ? '80rpx' : '40rpx' }}">
+            <image src='../../assets/imgs/qr-icon.svg' class='qr-icon' bindtap="updateQRStatus"></image>
+            <button wx:if="{{tpl_status}}" data-action="1" form-type="submit" class="btn {{ showBreathe ? 'breathe-btn' : ''}}" open-type="share">
+                <image src="../../assets/imgs/weChat.svg" class="wechat-icon" mode="widthFix"></image>
+                分享给好友
+            </button>
+            <button wx:if="{{tpl_status}}" data-action="2" form-type="submit" class="btn {{ showBreathe ? 'breathe-btn' : ''}}" bindtap="generatePoster">
+                <image src="../../assets/imgs/download.svg" class="download-icon" mode="widthFix"></image>
+                生成海报
+            </button>
+            <!-- <button class="btn" open-type="openSetting" hidden>授权</button> -->
+        </view>
+    </form>
+
+    <!--面对面分享-->
+    <view class="mask" style="opacity: {{ showQR? 1 : 0}}; height: {{showQR? '100%' : 0}}; padding: {{ showQR ? '0 40rpx' : 0}};" bindtap="updateQRStatus">
+        <view class="img-container qr-container" style="border-width: {{QRLoading ? '2rpx' : 0}}; background-color: {{QRLoading? 'rgba(246, 246, 246, 1)' : 'transparent'}}">
+            <view class="loading" wx:if="{{QRLoading}}">
+                <image src='../../assets/imgs/load-more.png' class='rotation'></image>
+            </view>
+
+            <image wx:if="{{QRUrl}}" src="{{QRUrl}}" bindload="imgLoad" binderror="imgError" data-type="1" mode="widthFix" class="qr-img {{needReverse ? 'reverse' : ''}}"></image>
+        </view>
+
+        <form bindsubmit="reportFormID" report-submit='true'>
+            <button data-action="8" form-type="submit" class="save-btn {{needReverse ? 'hide' : ''}}" catchtap="getQRSaveAuth">保存小程序码</button>
+        </form>
+        <view class="tips {{needReverse ? 'hide' : ''}}">点击空白处关闭</view>
+    </view>
+
+    <preview type="1" size="{{imageSize}}" id="preview"></preview>
+</view>

@@ -1,0 +1,22 @@
+<view class="preview" style="opacity: {{showPreview? 1 : 0}}; height: {{showPreview? '100%' : 0}}; padding-bottom: {{isIPhoneX? '68rpx' : 0}};" bindtap="updatePreviewStatus">
+    <view class="img-container" style="width: {{imageSize.width}}px;height: {{imageSize.height}}px; border-width: {{ posterImg.loading ? 0 : 2}}rpx">
+        <view class="loading" wx:if="{{posterImg.loading}}">
+            <image src='../../assets/imgs/load-more.png' class='rotation'></image>
+        </view>
+
+        <image src="{{posterImg.preview}}" bindload="imgLoad" mode="widthFix" class="prev-img {{ posterImg.url ==='' ? 'default' : ''}}" style="width: {{imageSize.width}}px;height: {{imageSize.height}}px"></image>
+    </view>
+
+    <form bindsubmit="reportFormID" report-submit='true'>
+        <view class="save-container">
+            <button class="btn save-btn" catchtap="savePosterImg" form-type="submit" data-action="3">
+                <image src="../../assets/imgs/download.svg" class="download-icon" mode="widthFix"></image>
+                保存海报
+            </button>
+
+            <view class="tips">{{tip}}</view>
+        </view>
+    </form>
+
+    <image wx:if="{{tip === ''}}" class="close-icon" catchtap="updatePreviewStatus" src="../../assets/imgs/close.svg"></image>
+</view>

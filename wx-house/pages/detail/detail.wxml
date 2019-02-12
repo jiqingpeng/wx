@@ -1,0 +1,81 @@
+<view class="page">
+    <view class="searchbox">
+      <view class="search">
+        <view>北京</view>
+        <input class="search-input" placeholder='你想住哪里'></input>
+      </view>
+    </view>
+    <view>
+    {{text}}
+    </view>
+    <view class="pagecont">
+        <view class="topbox">
+          <view class="swiper">
+            <swiper
+              indicator-dots="{{indicatorDots}}"
+              autoplay="{{autoplay}}"
+              interval="{{interval}}"
+              duration="{{duration}}"
+            >
+              <block wx:for="{{imgUrls}}" wx:key="{{imgUrls}}">
+                <swiper-item>
+                  <image src="{{item}}" class="slide-image" width="355" height="150" />
+                </swiper-item>
+              </block>
+            </swiper>
+          </view>
+          <view class="list-type">
+            <view class="item">
+              <image src="//bpic.588ku.com/art_origin_min_pic/19/01/04/e40ecd3c3ebeaa82529af0b1156131bb.jpg"/>
+              <view>
+              自如友家 
+              </view>
+            </view>
+            <view class="item">
+              <image src="//bpic.588ku.com/art_origin_min_pic/19/01/04/e40ecd3c3ebeaa82529af0b1156131bb.jpg"/>
+              <view>
+              自如友家 
+              </view>
+            </view>
+            <view class="item">
+              <image src="//bpic.588ku.com/art_origin_min_pic/19/01/04/e40ecd3c3ebeaa82529af0b1156131bb.jpg"/>
+              <view>
+              自如友家 
+              </view>
+            </view>
+            <view class="item">
+              <image src="//bpic.588ku.com/art_origin_min_pic/19/01/04/e40ecd3c3ebeaa82529af0b1156131bb.jpg"/>
+              <view>
+              自如友家 
+              </view>
+            </view>
+          </view>
+          <view class="scrool-left">
+            <scroll-view scroll-x="true" style="white-space: nowrap; display: block" class="showmian">
+            
+              <view class="w20 hovertxt">婚姻政法1</view> <view class="w20 hovertxt">婚姻政法1</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法</view> 
+              <view bindtap="chooseItem" class="w20 hovertxt" data-index="{{index}}">婚姻政法14</view> 
+            </scroll-view>
+          </view>
+        </view>
+        <view class="panelbox">
+          <view class="panel" wx:for="{{array1}}" wx:key="{{array1}}">
+            <image src="//bpic.588ku.com/art_origin_min_pic/19/01/04/e40ecd3c3ebeaa82529af0b1156131bb.jpg"/>
+            <view>
+              {{item.message}}
+            </view>
+          </view>
+          
+        </view>
+    </view>
+</view>

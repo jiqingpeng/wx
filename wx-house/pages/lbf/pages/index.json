@@ -1,0 +1,12 @@
+{
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#fff",
+    "backgroundColorBottom": "#f6f6f6",
+
+    "usingComponents": {
+        "income": "../components/income/income",
+        "activity": "../components/activity/activity",
+        "team": "../components/team/team"
+    }
+}

@@ -1,0 +1,24 @@
+<view class="mask" wx:if="{{show}}" style="opacity: {{show? 1: 0}}; height: {{show? '100%': 0}};">
+    <block wx:if="{{showShare}}">
+        <view class="share-type-container" hidden="{{hideShare}}" style="padding-bottom: {{isIPhoneX? '68rpx' : '30rpx'}};opacity: {{show? 1: 0}}; height: {{show? '140rpx': 0}};"
+            bindtap="updateShareStatus">
+            <form bindsubmit="reportFormID" report-submit='true'>
+                <view class="btn-container">
+                    <button data-action="11" form-type="submit" class="btn {{ showBreathe ? 'breathe-btn' : ''}}" open-type="share" catchtap="share">
+                        <image src="../../assets/imgs/weChat.svg" class="wechat-icon" mode="widthFix"></image>
+                        分享给好友
+                    </button>
+                    <button data-action="12" form-type="submit" class="btn {{ showBreathe ? 'breathe-btn' : ''}}" catchtap="generatePoster">
+                        <image src="../../assets/imgs/download.svg" class="download-icon" mode="widthFix"></image>
+                        生成海报
+                    </button>
+                </view>
+            </form>
+            <image data-status="false" class="close-icon" bindtap="updateShareStatus" src="../../assets/imgs/close.svg"></image>
+        </view>
+    </block>
+
+    <view wx:if="{{hideShare}}" style="height: {{previewHeight}}" class="preview-poster-container">
+        <preview bindstatuschange="onStatusChange" type="3" tip="" size="{{imageSize}}" id="preview"></preview>
+    </view>
+</view>

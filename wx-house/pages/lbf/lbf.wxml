@@ -1,0 +1,73 @@
+<block wx:if="{{isOpen}}">
+    <form bindsubmit="reportFormID" report-submit='true'>
+        <button data-action="0" data-type="1" open-type="getUserInfo" form-type="submit" catchgetuserinfo="initUserInfo">
+            <image data-action="0" wx:if="{{showEntry}}" src="./assets/imgs/lbf.png" class="lbf-entry" mode="widthFix"></image>
+        </button>
+    </form>
+
+    <block wx:if="{{showCoupon}}">
+        <block wx:if="{{couponCode === 0}}">
+            <cover-view class="coupon-container">
+                <!--领券弹窗-->
+                <cover-view class="coupon-warp" hidden="{{!sharer}}">
+                    <cover-image class="coupon-img" src="./assets/imgs/coupon.png"></cover-image>
+
+                    <cover-view class="coupon">
+                        <cover-view class="coupon-title">
+                            <cover-view class="title">优惠券</cover-view>
+                        </cover-view>
+
+                        <cover-view class="coupon-avatar">
+                            <cover-image src="{{sharer.avatar}}" class="avatar" mode="widthFix" catchtap='navigateTo'></cover-image>
+                        </cover-view>
+
+                        <cover-view class="user">
+                            <cover-view class="user-prefix">你的朋友</cover-view>
+                            <cover-view class="dotted"></cover-view>
+                            <cover-view class="nick-name">{{sharer.nickname}}</cover-view>
+                        </cover-view>
+
+                        <cover-view class="coupon-text">
+                            <cover-view class="type-prefix">送你一张</cover-view>
+                            <cover-view class="coupon-type">优惠券</cover-view>
+                        </cover-view>
+
+                        <cover-view class="coupon-btn-warp">
+                            <button data-action="13" data-type="2" class="receive-btn" open-type="getUserInfo" catchgetuserinfo="initUserInfo">
+                                <cover-image src="./assets/imgs/receive-btn.png" mode="widthFix"></cover-image>
+                            </button>
+                        </cover-view>
+                    </cover-view>
+
+                    <cover-image class="close" src="./assets/imgs/close.png" mode="widthFix" bindtap="hideCouponMask"></cover-image>
+                </cover-view>
+            </cover-view>
+        </block>
+
+        <block wx:else>
+            <view class="coupon-container" bindtap="hideCouponMask">
+
+                <view class="coupon-warp" wx:if="{{couponCode === 279}}">
+                    <image class="repeat-img" src="./assets/imgs/repeat.png"></image>
+
+                    <!-- <cover-view> -->
+                    <form bindsubmit="reportFormID" report-submit='true'>
+                        <button data-action="9" form-type="submit" class="confirm-btn" bindtap="hideCouponMask">好的</button>
+                    </form>
+                    <!-- </cover-view> -->
+                </view>
+
+                <view class="coupon-tip-warp" wx:if="{{couponCode === 281}}">
+                    <view class="tip-title">你已参与过该优惠活动</view>
+
+                    <view class="tip-content">更多优惠活动，敬请期待~</view>
+
+                    <form bindsubmit="reportFormID" report-submit='true'>
+                        <button data-action="10" form-type="submit" class="confirm-btn" bindtap="hideCouponMask">好的</button>
+                    </form>
+                </view>
+            </view>
+        </block>
+    </block>
+</block>
+<share-merchant id="merchant"></share-merchant>
